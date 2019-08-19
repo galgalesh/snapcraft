@@ -1,4 +1,8 @@
+ARG RISK=edge
+
 FROM ubuntu:xenial as builder
+
+RUN echo "Building snapcraft:$RISK"
 
 # Grab dependencies
 RUN apt update
@@ -10,8 +14,8 @@ RUN curl -L $(curl -H 'X-Ubuntu-Series: 16' 'https://api.snapcraft.io/api/v1/sna
 RUN mkdir -p /snap/core
 RUN unsquashfs -d /snap/core/current core.snap
 
-# Grab the snapcraft snap from the edge channel and unpack it in the proper place
-RUN curl -L $(curl -H 'X-Ubuntu-Series: 16' 'https://api.snapcraft.io/api/v1/snaps/details/snapcraft?channel=edge' | jq '.download_url' -r) --output snapcraft.snap
+# Grab the snapcraft snap from the $RISK channel and unpack it in the proper place
+RUN curl -L $(curl -H 'X-Ubuntu-Series: 16' 'https://api.snapcraft.io/api/v1/snaps/details/snapcraft?channel='$RISK | jq '.download_url' -r) --output snapcraft.snap
 RUN mkdir -p /snap/snapcraft
 RUN unsquashfs -d /snap/snapcraft/current snapcraft.snap
 
