@@ -1,8 +1,9 @@
 ARG RISK=edge
+ARG UBUNTU=xenial
 
-FROM ubuntu:xenial as builder
+FROM ubuntu:$UBUNTU as builder
 
-RUN echo "Building snapcraft:$RISK"
+RUN echo "Building snapcraft:$RISK in ubuntu:$UBUNTU"
 
 # Grab dependencies
 RUN apt update
@@ -28,7 +29,7 @@ RUN chmod +x /snap/bin/snapcraft
 
 # Multi-stage build, only need the snaps from the builder. Copy them one at a
 # time so they can be cached.
-FROM ubuntu:xenial
+FROM ubuntu:$UBUNTU
 COPY --from=builder /snap/core /snap/core
 COPY --from=builder /snap/snapcraft /snap/snapcraft
 COPY --from=builder /snap/bin/snapcraft /snap/bin/snapcraft
