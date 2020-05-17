@@ -120,7 +120,7 @@ class ExtensionTest(ProjectLoaderBaseTest, CommandBaseTestCase):
                         "source-subdir": "gnome",
                         "plugin": "make",
                         "build-snaps": ["gnome-3-34-1804-sdk/latest/stable"],
-                        "build-packages": ["gcc"],
+                        "build-packages": ["gcc", {"on amd64": ["libc6-dev-i386"]}],
                     }
                 }
             ),
@@ -188,6 +188,8 @@ class ExtensionTest(ProjectLoaderBaseTest, CommandBaseTestCase):
                           gnome-3-34-extension:
                             build-packages:
                             - gcc
+                            - on amd64:
+                              - libc6-dev-i386
                             build-snaps:
                             - gnome-3-34-1804-sdk/latest/stable
                             plugin: make

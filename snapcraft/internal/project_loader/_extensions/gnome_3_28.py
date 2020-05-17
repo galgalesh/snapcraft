@@ -107,6 +107,6 @@ class ExtensionImpl(Extension):
                 "source": "$SNAPCRAFT_EXTENSIONS_DIR/desktop",
                 "source-subdir": "gnome",
                 "plugin": "make",
-                "build-packages": ["libgtk-3-dev"],
+                "build-packages": ["libgtk-3-dev", {"on amd64": ["libc6-dev-i386"]}],
             }
         }
